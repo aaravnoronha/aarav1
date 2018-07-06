@@ -7,6 +7,9 @@ public class Main {
         String[] A = new String[]{"flower","flow","flight", "fl"};
         String S = longprefix(A);
         System.out.printf("longprefix %s\n",S );
+
+        int[] B = new int[]{-1,2,1,-4,3,-1,5,3,-2,-8,-7,8};
+        System.out.printf("maxsubarray: %d\n",maxsubarray(B));
     }
 
     // e.g. ["flower","flow","flight"], outputs "fl"
@@ -35,4 +38,41 @@ public class Main {
        return prefix;
 
     }
+    public static int maxsubarray(int [] A) {
+        int n = A.length;
+        int[] S = new int[n];
+        // populate S
+        // sum of elements in A
+        S[0] = A[0];
+        for(int i = 1; i < n; i++) {
+            S[i] = S[i - 1] + A[i];
+        }
+
+        // compute max subarray
+        int max = Integer.MIN_VALUE;
+        for(int i = 0; i < n; i++) {
+            for(int j = i; j < n; j++) {
+                int sumij;
+                if(i == 0) {
+                    sumij = S[j];
+                } else {
+                    sumij = S[j] - S[i-1];
+                }
+                if(sumij > max) {
+                    max = sumij;
+                }
+                // System.out.printf("i=%d,j=%d,sumij=%d,max=%d\n", i,j,sumij,max);
+            }
+
+        }
+        return max;
+    }
+
+
 }
+
+
+
+
+
+
